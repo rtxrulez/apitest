@@ -1,0 +1,70 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    position: relative; 
+    overflow: hidden;
+    min-width: 320px;
+    background-color: green ;
+    color: $text-color;
+    font-size: $body-size;
+    font-family: $font-base;
+}
+
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: $gray-default;
+
+    &:hover,
+    &:focus {
+        color: lighter($gray-default, 10);
+    }
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+}
+
+body {
+    background-color: $body-bg;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friends {
+    max-width: 740px;
+    border-radius: 10px;
+    &__head {
+        background-color: $brand-primary;
+        color: #fff;
+        font-size: 16px;
+        text-align: left;
+    }
+}
