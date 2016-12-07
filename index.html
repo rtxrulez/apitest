@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vk api test</title>
+	<link rel="stylesheet" href="styles/app.css">
+	<script src="https://vk.com/js/api/openapi.js?136"></script>
+	<script src="scripts/handlebars.min-latest.js"></script>
+</head>
+<body>
+	<!-- 5759873 -->
+	<div class="container">
+		<div class="friends">
+			<div class="friends__head" id="headerInfo"></div>
+			<div class="friends__content">
+				<div class="list list--item1">
+					<div class="splash">
+						<input type="search" class="search_input" placeholder="Начните вводить имя друга">
+					</div>
+					<div class="items_list">
+						<div class="items_list__title">Ваши друзья</div>
+						<div class="items_list__list">
+							<div class="user">
+								<div class="user__content">
+									<div class="avatar">
+										<img src="" alt="" class="avatar__img">
+									</div>
+									<div class="user__name">Test</div>
+								</div>
+								<div class="user__controls">
+									<button type="button" class="btn btn--add"></button>
+								</div>
+							</div>
+							<script type="text/x-handlebars-template">
+
+							</script>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="splash">
+				<button class="btn btn--save">Сохранить</button>
+			</div>
+		</div>
+	</div>
+	<script src="scripts/app.js"></script>
+</body>
+</html>
