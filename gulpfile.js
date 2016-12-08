@@ -23,7 +23,7 @@ gulp.task('serv', ['styles', 'scripts'], function() {
         server: serverDir // корневой каталог сервака
     });
 
-    gulp.watch('styles/*.scss', ['styles']);
+    gulp.watch('styles/*.css', ['styles']);
     gulp.watch('scripts/*.js', ['scripts']);
     gulp.watch('*.html').on('change', browserSync.reload);
 });

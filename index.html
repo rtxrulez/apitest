@@ -11,7 +11,7 @@
 	<!-- 5759873 -->
 	<div class="container">
 		<div class="friends">
-			<div class="friends__head" id="headerInfo"></div>
+			<div class="friends__head">Выберите друзей</div>
 			<div class="friends__content">
 				<div class="list list--item1">
 					<div class="splash">
@@ -20,23 +20,20 @@
 					<div class="items_list">
 						<div class="items_list__title">Ваши друзья</div>
 						<div class="items_list__list">
-							<div class="user">
-								<div class="user__content">
-									<div class="avatar">
-										<img src="" alt="" class="avatar__img">
-									</div>
-									<div class="user__name">Test</div>
-								</div>
-								<div class="user__controls">
-									<button type="button" class="btn btn--add"></button>
-								</div>
-							</div>
-							<script type="text/x-handlebars-template">
-
-							</script>
+							<!-- Вставляемый шаблон -->
 						</div>
 					</div>
-
+				</div>
+				<div class="list list--item2">
+					<div class="splash">
+						<input type="search" class="search_input" placeholder="Начните вводить имя друга">
+					</div>
+					<div class="items_list">
+						<div class="items_list__title">Друзья в списке</div>
+						<div class="items_list__list">
+							<!-- Вставляемый шаблон -->
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="splash">
@@ -44,6 +41,21 @@
 			</div>
 		</div>
 	</div>
+	<script id="user_temp1" type="text/x-handlebars-template">
+		{{#each response }}
+			<div class="user" data-uid="{{uid}}">
+				<div class="user__content">
+					<div class="avatar">
+						<img src="{{photo_100}}" alt="Photo {{first_name}} {{last_name}}" class="avatar__img">
+					</div>
+					<div class="user__name">{{first_name}} {{last_name}}</div>
+				</div>
+				<div class="user__controls">
+					<button  type="button" class="btn btn--add" data-event="{{uid}}"></button>
+				</div>
+			</div>
+		{{/each}}
+	</script>
 	<script src="scripts/app.js"></script>
 </body>
 </html>

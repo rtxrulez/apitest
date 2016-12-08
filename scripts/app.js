@@ -20,7 +20,7 @@ login().then(function() {
 	return new Promise(function(resolve, reject) {
 		VK.api('friends.get', {
 			'order': 'name',
-			'count': '5',
+			// 'count': '5',
 			'fields': [
 				'nickname',
 				'photo_100'
@@ -30,7 +30,37 @@ login().then(function() {
 				reject(new Error(response.error.error_msg));
 			} else {
 				console.log('friends: ', response);
-				
+				var user_temp1 = Handlebars.compile(document.getElementById('user_temp1').innerHTML);
+				var $list_item1 = document.querySelector('.list--item1 .items_list__list');
+				var $list_item2 = document.querySelector('.list--item2 .items_list__list');
+				$list_item1.innerHTML = user_temp1(response);
+
+				$list_item1.addEventListener('click', function(e) {
+					if(e.target.getAttribute('data-event')) {
+						console.log('yes', e.target);
+						// изменим класс у кнопки
+						e.target.classList.remove('btn--add');
+						e.target.classList.add('btn--remove');
+						// находим пользователя на кнопку которого кликнули
+						var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
+						// Добавляем в список
+						$list_item2.appendChild($item);
+					}
+				});
+
+				$list_item2.addEventListener('click', function(e) {
+					if(e.target.getAttribute('data-event')) {
+						console.log('yes', e.target);
+						// изменим класс у кнопки
+						e.target.classList.remove('btn--remove');
+						e.target.classList.add('btn--add');
+						// находим пользователя на кнопку которого кликнули
+						var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
+						// Добавляем в список
+						$list_item1.appendChild($item);
+					}
+				});
+
 			}
 		})
 	});
