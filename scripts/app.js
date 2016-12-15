@@ -1,73 +1,106 @@
 const PRID = 5759873;
+
+function dragStart(ev) {
+    ev.dataTransfer.effectAllowed = 'move';
+    ev.dataTransfer.setData("Text", ev.target.getAttribute('data-uid'));
+    ev.dataTransfer.setDragImage(ev.target, 100, 100);
+    return true;
+}
+
+function dragDrop(ev) {
+    console.log('ev');
+    var data = ev.dataTransfer.getData("Text");
+    ev.target.appendChild(document.getElementById(data));
+    ev.stopPropagation();
+    return false;
+}
+
+function dragEnter(ev) {
+    event.preventDefault();
+    return true;
+}
+
+function dragOver(ev) {
+    event.preventDefault();
+}
+
 VK.init({
-	apiId: PRID
+    apiId: PRID
 });
 
 function login() {
-	return new Promise(function(resolve, reject) {
-		VK.Auth.login(function(response) {
-			if (response.status == 'connected') {
-				resolve();
-			} else {
-				reject();
-			}
-		}, 2)
-	});
+    return new Promise(function(resolve, reject) {
+        VK.Auth.login(function(response) {
+            if (response.status == 'connected') {
+                resolve();
+            } else {
+                reject();
+            }
+        }, 2)
+    });
 }
 
 login().then(function() {
-	console.log('Авторизован!');
-	return new Promise(function(resolve, reject) {
-		VK.api('friends.get', {
-			'order': 'name',
-			// 'count': '5',
-			'fields': [
-				'nickname',
-				'photo_100'
-			]
-		}, function(response) {
-			if (response.error) {
-				reject(new Error(response.error.error_msg));
-			} else {
-				console.log('friends: ', response);
-				var user_temp1 = Handlebars.compile(document.getElementById('user_temp1').innerHTML);
-				var $list_item1 = document.querySelector('.list--item1 .items_list__list');
-				var $list_item2 = document.querySelector('.list--item2 .items_list__list');
-				$list_item1.innerHTML = user_temp1(response);
+    console.log('Авторизован!');
+    return new Promise(function(resolve, reject) {
+        VK.api('friends.get', {
+            'order': 'name',
+            // 'count': '5',
+            'fields': [
+                'nickname',
+                'photo_100'
+            ]
+        }, function(response) {
+            if (response.error) {
+                reject(new Error(response.error.error_msg));
+            } else {
+                var user_temp1 = Handlebars.compile(document.getElementById('user_temp1').innerHTML);
+                var $list_item1 = document.querySelector('.list--item1 .items_list__list');
+                var $list_item2 = document.querySelector('.list--item2 .items_list__list');
+                $list_item1.innerHTML = user_temp1(response);
 
-				$list_item1.addEventListener('click', function(e) {
-					if(e.target.getAttribute('data-event')) {
-						console.log('yes', e.target);
-						// изменим класс у кнопки
-						e.target.classList.remove('btn--add');
-						e.target.classList.add('btn--remove');
-						// находим пользователя на кнопку которого кликнули
-						var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
-						// Добавляем в список
-						$list_item2.appendChild($item);
-					}
-				});
+                $list_item1.addEventListener('click', function(e) {
+                    if (e.target.getAttribute('data-event')) {
+                        console.log('yes', e.target);
+                        // изменим класс у кнопки
+                        e.target.classList.remove('btn--add');
+                        e.target.classList.add('btn--remove');
+                        // находим пользователя на кнопку которого кликнули
+                        var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
+                        // Добавляем в список
+                        $list_item2.appendChild($item);
+                    }
+                });
 
-				$list_item2.addEventListener('click', function(e) {
-					if(e.target.getAttribute('data-event')) {
-						console.log('yes', e.target);
-						// изменим класс у кнопки
-						e.target.classList.remove('btn--remove');
-						e.target.classList.add('btn--add');
-						// находим пользователя на кнопку которого кликнули
-						var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
-						// Добавляем в список
-						$list_item1.appendChild($item);
-					}
-				});
+				var $userAll = document.querySelectorAll('.list--item1 .user');
+				console.log($userAll.length);
+				for (var i=0; i < $userAll.length; i++) {
+					$userAll[i].addEventListener('dragstart', function(e) {
+						console.log('drag, ', e.target);
+					})
+				}
 
-			}
-		})
-	});
+                $list_item2.addEventListener('click', function(e) {
+                    if (e.target.getAttribute('data-event')) {
+                        console.log('yes', e.target);
+                        // изменим класс у кнопки
+                        e.target.classList.remove('btn--remove');
+                        e.target.classList.add('btn--add');
+                        // находим пользователя на кнопку которого кликнули
+                        var $item = document.querySelector('[data-uid="' + e.target.getAttribute('data-event') + '"]');
+                        // Добавляем в список
+                        $list_item1.appendChild($item);
+                    }
+                });
+
+
+            }
+        })
+    });
 }, function() {
-	console.log('Ошибка авторизации');
+    console.log('Ошибка авторизации');
 }).catch(function(e) {
-	console.error(`Ошибка: ${e.message}`)
+    console.error(`Ошибка: ${e.message}`)
 });
 //
 // new Promise(function(resolve) {
