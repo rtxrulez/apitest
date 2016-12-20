@@ -7,13 +7,11 @@ function dragStart(ev) {
     return true;
 }
 
+// куда переносим
 function dragDrop(ev) {
     var data = ev.dataTransfer.getData("Text");
-    console.log('ev', ev.target);
-    if (ev.target.classList.contains('items_list__list') || ev.target.parentNode.classList.contains('items_list__list')) {
-        console.info('yes');
-        ev.target.appendChild(document.querySelector('[data-uid="'+data+'"]'));
-    }
+    // console.log('ev', ev, 'this', this);
+    this.appendChild(document.querySelector('[data-uid="'+data+'"]'));
     ev.stopPropagation();
     return false;
 }
@@ -82,6 +80,10 @@ login().then(function() {
 						dragStart(e);
 					})
 				};
+                $list_item1.addEventListener('dragenter', dragEnter);
+                $list_item1.addEventListener('drop', dragDrop);
+                $list_item1.addEventListener('dragover', dragOver);
+
                 $list_item2.addEventListener('dragenter', dragEnter);
                 $list_item2.addEventListener('drop', dragDrop);
                 $list_item2.addEventListener('dragover', dragOver);
