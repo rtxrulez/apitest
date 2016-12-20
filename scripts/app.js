@@ -8,9 +8,12 @@ function dragStart(ev) {
 }
 
 function dragDrop(ev) {
-    console.log('ev');
     var data = ev.dataTransfer.getData("Text");
-    ev.target.appendChild(document.getElementById(data));
+    console.log('ev', ev.target);
+    if (ev.target.classList.contains('items_list__list') || ev.target.parentNode.classList.contains('items_list__list')) {
+        console.info('yes');
+        ev.target.appendChild(document.querySelector('[data-uid="'+data+'"]'));
+    }
     ev.stopPropagation();
     return false;
 }
@@ -76,9 +79,12 @@ login().then(function() {
 				console.log($userAll.length);
 				for (var i=0; i < $userAll.length; i++) {
 					$userAll[i].addEventListener('dragstart', function(e) {
-						console.log('drag, ', e.target);
+						dragStart(e);
 					})
-				}
+				};
+                $list_item2.addEventListener('dragenter', dragEnter);
+                $list_item2.addEventListener('drop', dragDrop);
+                $list_item2.addEventListener('dragover', dragOver);
 
                 $list_item2.addEventListener('click', function(e) {
                     if (e.target.getAttribute('data-event')) {
